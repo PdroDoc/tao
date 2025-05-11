@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tao Te Ching - Código da Presença</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e1e; /* Fundo escuro, como editor de código */
+      color: #d4d4d4; /* Texto claro */
+      font-family: 'Fira Code', 'Courier New', monospace;
+      display: flex;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #252526;
+      border-right: 1px solid #3c3c3c;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      color: #569cd6; /* Azul, como palavras-chave */
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin-bottom: 15px;
+    }
+    .sidebar a {
+      color: #ce9178; /* Laranja, como strings */
+      text-decoration: none;
+      font-size: 1em;
+    }
+    .sidebar a:hover {
+      color: #d7ba7d; /* Amarelo, para hover */
+    }
+    .sidebar .snippet {
+      color: #6a9955; /* Verde, como comentários */
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #252526;
+      margin: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    .content h1 {
+      color: #569cd6; /* Azul */
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .content p {
+      color: #d4d4d4;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+    .verse {
+      color: #ce9178; /* Laranja */
+    }
+    .dedication {
+      color: #6a9955; /* Verde */
+      font-style: italic;
+      margin-top: 20px;
+    }
+    .line-number {
+      color: #858585;
+      display: inline-block;
+      width: 30px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #3c3c3c;
+      }
+      .content {
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2># Índice</h2>
+      <ul>
+        <li>
+          <a href="#">Capítulo 1</a>
+          <div class="snippet">// O Tao que pode ser nomeado...</div>
+        </li>
+        <li>
+          <a href="#">Capítulo 2</a>
+          <div class="snippet">// Quando o mundo reconhece a beleza...</div>
+        </li>
+        <li>
+          <a href="#">Capítulo 3</a>
+          <div class="snippet">// Não glorificar os talentosos...</div>
+        </li>
+        <li>
+          <a href="#">Capítulo 4</a>
+          <div class="snippet">// O Tao é como um poço...</div>
+        </li>
+        <li>
+          <a href="#">Capítulo 5</a>
+          <div class="snippet">// O céu e a terra não são compassivos...</div>
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1># Tao Te Ching - Capítulo 1</h1>
+      <p><span class="line-number">1</span><span class="verse">O Tao que pode ser nomeado não é o Tao eterno.</span></p>
+      <p><span class="line-number">2</span><span class="verse">O nome que pode ser dito não é o nome eterno.</span></p>
+      <p><span class="line-number">3</span><span class="verse">O sem-nome é o princípio do céu e da terra;</span></p>
+      <p><span class="line-number">4</span><span class="verse">O nomeado é a mãe de todas as coisas.</span></p>
+      <p class="dedication"><span class="line-number">5</span># Para Miau, pela promessa de presença.</p>
+      <p class="dedication"><span class="line-number">6</span># Para Larah, por um novo caminho.</p>
+    </div>
+  </div>
+</body>
+</html>
