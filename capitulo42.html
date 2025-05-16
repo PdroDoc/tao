@@ -1,0 +1,113 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tao Te Ching - Código da Presença</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e1e; /* Fundo escuro, como editor de código */
+      color: #d4d4d4; /* Texto claro */
+      font-family: 'Fira Code', 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .editor {
+      background-color: #252526;
+      border: 1px solid #3c3c3c;
+      border-radius: 5px;
+      padding: 20px;
+      max-width: 800px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      color: #569cd6; /* Azul, como palavras-chave em editores */
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #d4d4d4;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+    .verse {
+      color: #ce9178; /* Laranja, como strings em código */
+    }
+    .dedication {
+      color: #6a9955; /* Verde, como comentários em código */
+      font-style: italic;
+      margin-top: 20px;
+    }
+    /* Simula números de linha */
+    .line-number {
+      color: #858585;
+      display: inline-block;
+      width: 30px;
+      text-align: right;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="editor">
+    <h1># Tao Te Ching - Capítulo 42</h1>
+    <p><a href="https://pdrodoc.github.io/tao/index.html" style="color: #569cd6;">← Voltar </a></p>
+<p><span class="line-number">1</span><span class="verse">The Tao gives birth to One.</span></p>
+<p><span class="line-number">2</span><span class="verse">One gives birth to Two.,</span></p>
+<p><span class="line-number">3</span><span class="verse">Two gives birth to Three.</span></p>
+<p><span class="line-number">4</span><span class="verse">Three gives birth to all things.</span></p>
+<p><span class="line-number">5</span><span class="verse">All things have their backs to the female</span></p>
+<p><span class="line-number">6</span><span class="verse">and stand facing the male.</span></p>
+<p><span class="line-number">7</span><span class="verse">When male and female combine,</span></p>
+<p><span class="line-number">8</span><span class="verse">all things achieve harmony.</span></p>
+<p><span class="line-number">9</span><span class="verse">Ordinary men hate solitude.</span></p>
+<p><span class="line-number">10</span><span class="verse">But the Master makes use of it,</span></p>
+<p><span class="line-number">11</span><span class="verse">embracing his aloneness, realizing</span></p>
+<p><span class="line-number">12</span><span class="verse">he is one with the whole universe.,</span></p>
+<p class="dedication"><span class="line-number">5</span># Para Miau, pela promessa de presença.</p>
+      </div>
+</body>
+</html>
