@@ -1,144 +1,308 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tao Te Ching - Código da Presença</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #1e1e1e; /* Fundo escuro, como editor de código */
-      color: #d4d4d4; /* Texto claro */
-      font-family: 'Fira Code', 'Courier New', monospace;
-      display: flex;
-      min-height: 100vh;
-    }
-    .container {
-      display: flex;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .sidebar {
-      width: 250px;
-      background-color: #252526;
-      border-right: 1px solid #3c3c3c;
-      padding: 20px;
-      height: 100vh;
-      overflow-y: auto;
-    }
-    .sidebar h2 {
-      color: #569cd6; /* Azul, como palavras-chave */
-      font-size: 1.4em;
-      margin-bottom: 20px;
-    }
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-    .sidebar li {
-      margin-bottom: 15px;
-    }
-    .sidebar a {
-      color: #ce9178; /* Laranja, como strings */
-      text-decoration: none;
-      font-size: 1em;
-    }
-    .sidebar a:hover {
-      color: #d7ba7d; /* Amarelo, para hover */
-    }
-    .sidebar .snippet {
-      color: #6a9955; /* Verde, como comentários */
-      font-size: 0.9em;
-      margin-top: 5px;
-    }
-    .content {
-      flex: 1;
-      padding: 20px;
-      background-color: #252526;
-      margin: 20px;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    }
-    .content h1 {
-      color: #569cd6; /* Azul */
-      font-size: 1.8em;
-      margin-bottom: 20px;
-    }
-    .content p {
-      color: #d4d4d4;
-      line-height: 1.6;
-      margin: 10px 0;
-    }
-    .verse {
-      color: #ce9178; /* Laranja */
-    }
-    .dedication {
-      color: #6a9955; /* Verde */
-      font-style: italic;
-      margin-top: 20px;
-    }
-    .line-number {
-      color: #858585;
-      display: inline-block;
-      width: 30px;
-      text-align: right;
-      margin-right: 10px;
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #3c3c3c;
-      }
-      .content {
-        margin: 10px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tao Te Ching - Código da Presença</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            overflow-x: hidden;
+        }
+        
+        .code-line {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        
+        .line-number {
+            position: absolute;
+            left: 0;
+            color: #858585;
+            user-select: none;
+        }
+        
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .highlight {
+            color: #569cd6;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #c586c0;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <div class="sidebar">
-      <h2># Índice</h2>
-      <ul>
-        <li>
-          <a href="#">Capítulo 1</a>
-          <div class="snippet">// O Tao que pode ser nomeado...</div>
-        </li>
-        <li>
-          <a href="capitulo71.html">Capítulo 71 </a>
-          <div class="snippet">// Não-saber é o verdadeiro saber....</div>
-        </li>
-        <li>
-          <a href="capitulo48.html">Capítulo 48</a>
-          <div class="snippet">// Aprender é acumular a cada dia...</div>
-        </li>
-        <li>
-          <a href="Capitulo36.html">Capítulo 36</a>
-          <div class="snippet">// Se você quer diminuir algo...</div>
-        </li>
-         <li>
-          <a href="capitulo-68.html">Capítulo 68</a>
-          <div class="snippet">// Espere e veja...</div>
-        <li>
-          <a href="capitulo3.html">Capítulo 3</a>
-          <div class="snippet">// ...</div>
-        </li>
-      </ul>
+<body class="min-h-screen flex flex-col">
+    <!-- Header with VSCode-like tabs -->
+    <header class="bg-gray-900 border-b border-gray-700">
+        <div class="flex items-center px-4 py-2">
+            <div class="flex space-x-2 mr-4">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <nav class="flex space-x-4 text-sm">
+                <div class="px-3 py-1 bg-gray-800 rounded-t text-white">index.html</div>
+                <div class="px-3 py-1 text-gray-500 hover:text-white">style.css</div>
+                <div class="px-3 py-1 text-gray-500 hover:text-white">tao.js</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="flex flex-1">
+        <!-- Sidebar (initially hidden on mobile) -->
+        <aside class="sidebar w-64 bg-gray-800 border-r border-gray-700 hidden md:block">
+            <div class="p-4 border-b border-gray-700">
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">EXPLORADOR</h2>
+            </div>
+            <div class="p-2">
+                <div class="text-gray-400 text-xs mb-1">TAO TE CHING</div>
+                <ul class="space-y-1">
+                    <li class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-code mr-2 text-blue-400"></i>
+                        <span>Prefácio</span>
+                    </li>
+                    <a href="https://pdrodoc.github.io/tao/capitulo1.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 1</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo3.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 3</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo36.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 36</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo42.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 42</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo48.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 48</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo68.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 68</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo71.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 71</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/Capitulo%2071.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 71</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/Capitulo36.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 36</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo3.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 3</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo42.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 42</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo43.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 43</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo48.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 48</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo68.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 68</span>
+                    </a>
+                    <a href="https://pdrodoc.github.io/tao/capitulo71.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 71</span>
+                    </a>
+                    <!-- Para adicionar mais capítulos, copie uma linha abaixo, altere o número e o texto:
+                    <a href="https://pdrodoc.github.io/tao/capituloX.html" class="flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo X</span>
+                    </a>
+                    -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 overflow-auto p-6">
+            <div class="max-w-4xl mx-auto">
+                <!-- Terminal-like header -->
+                <div class="bg-gray-800 rounded-t-lg px-4 py-2 flex items-center">
+                    <div class="flex space-x-2 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-gray-600"></div>
+                        <div class="w-3 h-3 rounded-full bg-gray-600"></div>
+                        <div class="w-3 h-3 rounded-full bg-gray-600"></div>
+                    </div>
+                    <span class="text-xs text-gray-400">TERMINAL - Pdro P.></span>
+                </div>
+                
+                <!-- Code-like content -->
+                <div class="bg-gray-900 p-4 rounded-b-lg border border-gray-800">
+                    <div class="code-line mb-2">
+                        <span class="line-number">1</span>
+                        <span class="string">O Tao que pode ser nomeado não é o Tao eterno.</span>
+                    </div>
+                    <div class="code-line mb-2">
+                        <span class="line-number">2</span>
+                        <span class="string">O nome que pode ser dito não é o nome eterno.</span>
+                    </div>
+                    <div class="code-line mb-2">
+                        <span class="line-number">3</span>
+                        <span class="string">O sem-nome é a origem do céu e da terra.</span>
+                    </div>
+                    <div class="code-line mb-8">
+                        <span class="line-number">4</span>
+                        <span class="string">O nomeado é a mãe de todas as coisas.</span>
+                    </div>
+                    
+                    <div class="code-line mb-6">
+                        <span class="line-number">9</span>
+                        <button id="exploreBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200">
+                            <i class="fas fa-terminal mr-2"></i>Explorar os capítulos
+                        </button>
+                        <span class="ml-2 text-gray-500 text-sm cursor-blink">_</span>
+                    </div>
+                    
+                    <div id="chaptersOutput" class="hidden">
+                        <div class="code-line mb-2">
+                            <span class="line-number">10</span>
+                            <span class="comment">// Capítulos disponíveis:</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 pl-8">
+                            <!-- Chapters would be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden mt-6">
+                    <button id="mobileMenuBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 transition-all duration-200">
+                        <i class="fas fa-bars mr-2"></i>Menu de Capítulos
+                    </button>
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="content">
-      <h1># Tao Te Ching - Capítulo 1</h1>
-      <p><span class="line-number">1</span><span class="verse">O Tao que pode ser nomeado não é o Tao eterno.</span></p>
-      <p><span class="line-number">2</span><span class="verse">O nome que pode ser dito não é o nome eterno.</span></p>
-      <p><span class="line-number">3</span><span class="verse">O sem-nome é o princípio do céu e da terra;</span></p>
-      <p><span class="line-number">4</span><span class="verse">O nomeado é a mãe de todas as coisas.</span></p>
-      <p class="dedication"><span class="line-number">5</span># Para Miau, pela promessa de presença.</p>
+
+    <!-- Mobile sidebar (hidden by default) -->
+    <div id="mobileSidebar" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-64 bg-gray-800 overflow-y-auto">
+            <div class="p-4 flex justify-between items-center border-b border-gray-700">
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">CAPÍTULOS</h2>
+                <button id="closeMobileMenu" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-2">
+                <ul class="space-y-1">
+                    <li class="flex items-center px-2 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-code mr-2 text-blue-400"></i>
+                        <span>Prefácio</span>
+                    </li>
+                    <li class="flex items-center px-2 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 1</span>
+                    </li>
+                    <li class="flex items-center px-2 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded cursor-pointer">
+                        <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                        <span>Capítulo 2</span>
+                    </li>
+                    <!-- More chapters would be added here -->
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Explore button functionality
+            const exploreBtn = document.getElementById('exploreBtn');
+            const chaptersOutput = document.getElementById('chaptersOutput');
+            
+            exploreBtn.addEventListener('click', function() {
+                chaptersOutput.classList.toggle('hidden');
+                
+                if (!chaptersOutput.classList.contains('hidden')) {
+                    // Simulate loading chapters
+                    const chaptersContainer = chaptersOutput.querySelector('.grid');
+                    chaptersContainer.innerHTML = '';
+                    
+                    for (let i = 1; i <= 10; i++) {
+                        const chapterElement = document.createElement('div');
+                        chapterElement.className = 'flex items-center px-2 py-1 text-sm text-gray-300 hover:bg-gray-800 rounded cursor-pointer';
+                        chapterElement.innerHTML = `
+                            <i class="far fa-file-alt mr-2 text-yellow-400"></i>
+                            <span>Capítulo ${i}</span>
+                        `;
+                        chaptersContainer.appendChild(chapterElement);
+                    }
+                }
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileSidebar.classList.remove('hidden');
+            });
+            
+            closeMobileMenu.addEventListener('click', function() {
+                mobileSidebar.classList.add('hidden');
+            });
+            
+            // Typewriter effect for the title
+            const taoText = "O Tao que pode ser nomeado não é o Tao eterno";
+            let i = 0;
+            const speed = 50;
+            
+            function typeWriter() {
+                if (i < taoText.length) {
+                    document.querySelector('.string').textContent += taoText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            
+            // Start the typewriter effect after a short delay
+            setTimeout(typeWriter, 1000);
+        });
+    </script>
 </body>
 </html>
